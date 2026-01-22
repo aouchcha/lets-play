@@ -1,0 +1,10 @@
+package Lets_play.Backend.Controllers;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/users")
+public class Users {
+    
+}
