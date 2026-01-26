@@ -1,5 +1,15 @@
 package Lets_play.Backend.Repository;
 
-public class ProductRepository {
-    
+import org.springframework.stereotype.Repository;
+
+import Lets_play.Backend.Model.Product;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+
+@Repository
+public interface ProductRepository extends MongoRepository<Product, String> {
+    List<Product> findAll();
 }
