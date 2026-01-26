@@ -1,6 +1,5 @@
 package Lets_play.Backend.Configs.Jwt;
 
-import java.security.Key;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
