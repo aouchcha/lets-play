@@ -16,9 +16,16 @@ public class JWT {
     private final SecretKey secretKey;
     private final long experationTime;
 
-    public JWT(@Value("${jwtKey}") String Secret, @Value("{jwtExperation}") Long experationTime) {
+    public JWT(@Value("${Jwt_Key}") String Secret, @Value("${Jwt_Experation}") Long experationTime) {
+        System.out.println(Secret);
+        System.out.println(experationTime);
+        System.out.println("---------------------------------------------------------------------------------------------");
+
         this.experationTime = experationTime;
         this.secretKey = Keys.hmacShaKeyFor(Secret.getBytes());
+
+        System.out.println("Secret key length (bytes): " + Secret.getBytes().length);
+        System.out.println("Expiration: " + experationTime);
     }
 
     public String GenerateToken(@NonNull String Username, Role role) {

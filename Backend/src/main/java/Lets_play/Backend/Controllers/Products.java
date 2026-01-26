@@ -20,6 +20,6 @@ public class Products {
     }
     @GetMapping
     public ResponseEntity<?> GetProducts() {
-        return null;
+        return productService.getProducts();
     }
 }
