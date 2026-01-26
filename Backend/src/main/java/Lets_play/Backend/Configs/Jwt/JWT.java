@@ -3,6 +3,8 @@ package Lets_play.Backend.Configs.Jwt;
 import java.security.Key;
 import java.util.Date;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +14,7 @@ import lombok.NonNull;
 
 @Component
 public class JWT {
-    private final Key secretKey;
+    private final SecretKey secretKey;
     private final long experationTime;
 
     public JWT(@Value("${jwtKey}") String Secret, @Value("{jwtExperation}") Long experationTime) {
@@ -35,9 +37,9 @@ public class JWT {
             return false;
         try {
             Jwts.parser()
-                    .setSigningKey(secretKey)
+                    .verifyWith(secretKey)
                     .build()
-                    .parseClaimsJws(token);
+                    .parse(token);
             return true;
 
         } catch (Exception e) {
@@ -46,11 +48,11 @@ public class JWT {
     }
 
     public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token).getPayload().getSubject();
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getSubject();
     }
 
     public Role getRole(String token) {
-        return Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token).getPayload().get("role",
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role",
                 Role.class);
     }
 }
