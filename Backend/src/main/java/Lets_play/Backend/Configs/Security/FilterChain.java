@@ -17,6 +17,8 @@ public class FilterChain {
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.csrf((csrf) -> csrf.disable())
         .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .httpBasic(null)
+        .formLogin(null)
         .authorizeHttpRequests((request) -> request
             .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/products").hasRole("USER")
