@@ -12,11 +12,11 @@ import io.jsonwebtoken.security.Keys;
 import lombok.NonNull;
 
 @Component
-public class JWT {
+public class Jwt {
     private final SecretKey secretKey;
     private final long experationTime;
 
-    public JWT(@Value("${Jwt_Key}") String Secret, @Value("${Jwt_Experation}") Long experationTime) {
+    public Jwt(@Value("${jwtKey}") String Secret, @Value("${jwtExperation}") Long experationTime) {
         System.out.println(Secret);
         System.out.println(experationTime);
         System.out.println("---------------------------------------------------------------------------------------------");

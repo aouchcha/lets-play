@@ -7,5 +7,5 @@ import Lets_play.Backend.Model.User;
 
 @Repository
 public interface userRepository extends MongoRepository<User, String> {
-    
+    User findByUsername(String username);
 }

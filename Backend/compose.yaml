@@ -7,7 +7,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: aouchcha
       MONGO_INITDB_ROOT_PASSWORD: Achraf1303
-      MONGO_INITDB_DATABASE: mydatabase
+      MONGO_INITDB_DATABASE: LestPlay
     volumes:
       - mongodb_data:/data/db
 
