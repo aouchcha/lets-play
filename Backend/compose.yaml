@@ -7,9 +7,11 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: aouchcha
       MONGO_INITDB_ROOT_PASSWORD: Achraf1303
-      MONGO_INITDB_DATABASE: LestPlay
+      MONGO_INITDB_DATABASE: LetsPlay
     volumes:
       - mongodb_data:/data/db
+    labels:
+      org.springframework.boot.service-connection: mongodb
 
 volumes:
   mongodb_data:
