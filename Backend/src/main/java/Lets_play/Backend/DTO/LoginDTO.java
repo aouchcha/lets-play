@@ -1,16 +1,17 @@
 package Lets_play.Backend.DTO;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDTO {
-    @NonNull
+    @NotBlank(message = "Username required")
     private String username;
-    @NonNull
+
+    @NotBlank(message = "Email required")
     private String password;
 }

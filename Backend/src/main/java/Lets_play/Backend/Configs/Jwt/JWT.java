@@ -17,22 +17,26 @@ public class Jwt {
     private final long experationTime;
 
     public Jwt(@Value("${jwtKey}") String Secret, @Value("${jwtExperation}") Long experationTime) {
-        System.out.println(Secret);
+        System.out.println("--------------------------------------------------------------------------------------");
         System.out.println(experationTime);
-        System.out.println("---------------------------------------------------------------------------------------------");
-
+        System.out.println("--------------------------------------------------------------------------------------");
         this.experationTime = experationTime;
         this.secretKey = Keys.hmacShaKeyFor(Secret.getBytes());
-
-        System.out.println("Secret key length (bytes): " + Secret.getBytes().length);
-        System.out.println("Expiration: " + experationTime);
     }
 
-    public String GenerateToken(@NonNull String Username, Role role) {
+    public String GenerateToken(@NonNull String Username, String role) {
+        Date now = new Date();
+        Date expiry = new Date(System.currentTimeMillis() + experationTime);
+
+        System.out.println("=== TOKEN CREATION ===");
+        System.out.println("Created at: " + now);
+        System.out.println("Expires at: " + expiry);
+        System.out.println("Expiration time (ms): " + experationTime);
+        System.out.println("======================");
         return Jwts
                 .builder()
                 .subject(Username)
-                .claim("role", role)
+                .claim("role", role.replace("ROLE_", ""))
                 .expiration(new Date(System.currentTimeMillis() + experationTime))
                 .signWith(secretKey)
                 .compact();
@@ -49,6 +53,7 @@ public class Jwt {
             return true;
 
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             return false;
         }
     }
@@ -57,8 +62,8 @@ public class Jwt {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getSubject();
     }
 
-    public Role getRole(String token) {
+    public String getRole(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role",
-                Role.class);
+                String.class);
     }
 }
