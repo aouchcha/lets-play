@@ -1,3 +1,5 @@
+# version: "3.9"
+
 services:
   mongodb:
     image: mongo:7
@@ -8,10 +10,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: aouchcha
       MONGO_INITDB_ROOT_PASSWORD: Achraf1303
       MONGO_INITDB_DATABASE: LetsPlay
+    command: ["mongod", "--auth"]
     volumes:
       - mongodb_data:/data/db
-    labels:
-      org.springframework.boot.service-connection: mongodb
 
 volumes:
   mongodb_data:
