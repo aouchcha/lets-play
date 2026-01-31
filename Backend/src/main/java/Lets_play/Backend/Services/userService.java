@@ -19,6 +19,7 @@ public class userService {
     public userService(userRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<?> users() {
         final List<User> users = userRepository.findAll();
@@ -27,6 +28,16 @@ public class userService {
             UserDTO dto = new UserDTO(u.getId(), u.getUsername(), u.getEmail(), u.getRole());
             response.add(dto);
         }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PreAuthorize("hasRole('Admin')")
+    public ResponseEntity<?> getSpecificUser(String id) {
+        final User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
+        }
+        UserDTO response = new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getRole());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
