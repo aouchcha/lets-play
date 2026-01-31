@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import Lets_play.Backend.Configs.Jwt.Role;
 import Lets_play.Backend.DTO.CreateProduct;
@@ -49,7 +48,7 @@ public class ProductService {
         return ResponseEntity.status(HttpStatus.OK).body(item);
     }
 
-    // @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('User')")
     public ResponseEntity<?> create(CreateProduct body) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         final User user = userRepository.findByUsername(username);
