@@ -24,11 +24,10 @@ public class RegisterService {
     }
     public ResponseEntity<?> register(RegisterDTO body) {
         try {
-            
             User new_User = new User();
             new_User.setUsername(body.getUsername());
             new_User.setEmail(body.getEmail());
-            new_User.setPassword(this.passwordEncoder.encode(body.getPassword()));
+            new_User.setPassword(passwordEncoder.encode(body.getPassword()));
             new_User.setRole(Role.User.toString());
             userRepository.save(new_User);
             return ResponseEntity.ok("User Registerd");

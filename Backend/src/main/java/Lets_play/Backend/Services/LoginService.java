@@ -43,7 +43,7 @@ public class LoginService {
                     .orElse("");
 
             String token = jwt.GenerateToken(username, role);
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("token", token, "usernam", username));
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("token", token));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }

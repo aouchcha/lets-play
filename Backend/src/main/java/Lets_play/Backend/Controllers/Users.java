@@ -10,6 +10,7 @@ import Lets_play.Backend.Services.userService;
 
 @RestController
 @RequestMapping("/api/users")
+
 public class Users {
     private final userService userService;
 

@@ -29,18 +29,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = resolveToken(request);
-        System.out.println(jwt.validateToken(token));
         if (token != null && jwt.validateToken(token)) {
-            // System.out.println("TOOOOOOOOOOOOOKEN ===========~" + token);
             String username = jwt.getUsername(token);
             String role = jwt.getRole(token);
-            System.out.println(role);
 
             List<GrantedAuthority> authorities = new ArrayList<>();
             if (role != null && !role.isEmpty()) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
             }
-            System.out.println(authorities.get(0));
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -50,7 +46,6 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private String resolveToken(HttpServletRequest request) {
-        // System.out.println("Hanniiiiiiiiiiiiiiiiiiiiiiiiiiii");
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);

@@ -2,7 +2,6 @@ package Lets_play.Backend.Controllers;
 
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin("*")
 public class Auth {
 
     private final RegisterService registerService;
@@ -29,13 +27,11 @@ public class Auth {
 
     @PostMapping("/login")
     public ResponseEntity<?> Login(@Valid @RequestBody LoginDTO body) {
-        System.out.println("Ana F login");
         return loginService.login(body);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> Register(@Valid @RequestBody RegisterDTO body) {
-        System.out.println("Ana F register");
         return registerService.register(body);
     }
 }

@@ -50,7 +50,7 @@ public class ProductService {
 
     @PreAuthorize("hasRole('User')")
     public ResponseEntity<?> create(CreateProduct body) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         final User user = userRepository.findByUsername(username);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You don't have permission to create a product");

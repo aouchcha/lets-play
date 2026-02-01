@@ -17,22 +17,11 @@ public class Jwt {
     private final long experationTime;
 
     public Jwt(@Value("${jwtKey}") String Secret, @Value("${jwtExperation}") Long experationTime) {
-        System.out.println("--------------------------------------------------------------------------------------");
-        System.out.println(experationTime);
-        System.out.println("--------------------------------------------------------------------------------------");
         this.experationTime = experationTime;
         this.secretKey = Keys.hmacShaKeyFor(Secret.getBytes());
     }
 
     public String GenerateToken(@NonNull String Username, String role) {
-        Date now = new Date();
-        Date expiry = new Date(System.currentTimeMillis() + experationTime);
-
-        System.out.println("=== TOKEN CREATION ===");
-        System.out.println("Created at: " + now);
-        System.out.println("Expires at: " + expiry);
-        System.out.println("Expiration time (ms): " + experationTime);
-        System.out.println("======================");
         return Jwts
                 .builder()
                 .subject(Username)
@@ -53,7 +42,6 @@ public class Jwt {
             return true;
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
             return false;
         }
     }
