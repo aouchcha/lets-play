@@ -26,25 +26,27 @@ public class LoginService {
     }
 
     public ResponseEntity<?> login(LoginDTO body) {
+        // System.out.println(body.getUsername());
+        // System.out.println(body.getPassword());
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             body.getUsername(),
                             body.getPassword()));
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
-
+            
             String username = userDetails.getUsername();
-
             Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-
+            
             String role = authorities.stream()
-                    .findFirst()
-                    .map(GrantedAuthority::getAuthority)
-                    .orElse("");
-
+            .findFirst()
+            .map(GrantedAuthority::getAuthority)
+            .orElse("");
+            
             String token = jwt.GenerateToken(username, role);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("token", token));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
