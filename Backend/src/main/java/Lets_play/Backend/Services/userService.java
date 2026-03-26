@@ -40,4 +40,7 @@ public class userService {
         UserDTO response = new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getRole());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    // @PreAuthorize("hasRole('Admin')")
+    // public
 }

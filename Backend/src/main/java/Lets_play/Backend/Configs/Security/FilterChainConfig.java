@@ -1,6 +1,5 @@
 package Lets_play.Backend.Configs.Security;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,16 +18,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class FilterChainConfig {
     private final JwtFilter jwtFilter;
     private final RateLimiterFilter rateLimitFilter;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public FilterChainConfig(JwtFilter jwtFilter, RateLimiterFilter rateLimitFilter) {
+    public FilterChainConfig(JwtFilter jwtFilter, RateLimiterFilter rateLimitFilter, CustomAuthenticationEntryPoint authenticationEntryPoint, CustomAccessDeniedHandler accessDeniedHandler) {
         this.jwtFilter = jwtFilter;
         this.rateLimitFilter = rateLimitFilter;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
     }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.csrf((csrf) -> csrf.disable())
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(accessDeniedHandler)
+                        .authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests((request) -> request
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
@@ -39,7 +45,7 @@ public class FilterChainConfig {
         http.addFilterBefore(jwtFilter, RateLimiterFilter.class);
         return http.build();
     }
-    
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

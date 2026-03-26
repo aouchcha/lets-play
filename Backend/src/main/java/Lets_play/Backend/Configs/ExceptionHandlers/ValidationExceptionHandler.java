@@ -34,7 +34,7 @@ public class ValidationExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> MalformedBody(IllegalArgumentException ex) {
         Map<String, String> error = new HashMap<>();
-        error.put("error", "Bad REquest");
+        error.put("error", "Bad Request");
         return error;
     }
 }

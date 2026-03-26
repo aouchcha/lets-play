@@ -27,5 +27,10 @@ public class Users {
     public ResponseEntity<?> GetOneUser(@PathVariable String id) {
         return userService.getSpecificUser(id);
     }
+
+    // @DeleteMapping("/{user_id}")
+    // public ResponseEntity<?> DeleteUser(@PathVariable String user_id) {
+    //     return userService.deleteUser(user_id);
+    // }
     
 }

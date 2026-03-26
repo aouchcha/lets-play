@@ -72,7 +72,7 @@ public class ProductService {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         final User user = userRepository.findByUsername(username);
         if (user == null || (!user.getRole().equals(Role.Admin.toString()) && !user.getId().equals(product.getUserId()))) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You don't have permission to create a product");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You don't have permission to update a product");
         }
         product.setName(body.getName());
         product.setDescription(body.getDescription());
@@ -89,7 +89,7 @@ public class ProductService {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         final User user = userRepository.findByUsername(username);
         if (user == null || (!user.getRole().equals(Role.Admin.toString()) && !user.getId().equals(product.getUserId()))) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You don't have permission to create a product");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You don't have permission to delete a product");
         }
         productRepository.delete(product);
         return ResponseEntity.status(HttpStatus.OK).body("Product Removed");
