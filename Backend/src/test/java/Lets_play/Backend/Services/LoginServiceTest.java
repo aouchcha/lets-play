@@ -2,9 +2,7 @@ package Lets_play.Backend.Services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -29,12 +27,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import Lets_play.Backend.Configs.Jwt.Jwt;
 import Lets_play.Backend.Configs.Jwt.Role;
 import Lets_play.Backend.DTO.LoginDTO;
-import Lets_play.Backend.Repository.userRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class LoginServiceTest {
